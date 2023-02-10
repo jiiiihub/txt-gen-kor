@@ -48,11 +48,14 @@ model = get_model()
 text = st.text_input("시작할 문장이나 문구를 입력하세요👇", value=default_text)
 # st.write(text)
 punct = ('!', '?', '.')
+st.text("")
 
 
 ## Buttons ---------------------------------------
 if st.button("Submit") and text:
+    st.text("")
     st.markdown("## Generated Text")
+    st.text("")
     with st.spinner('processing..'):
         print(f'input > {text}') 
         input_ids = tokenizer(text)['input_ids']
@@ -67,6 +70,7 @@ if st.button("Submit") and text:
             generated = generated[:(i+1)]
         print(f'KoGPT > {generated}')
     result = st.write(generated)
+    st.text("")
     
     ## Buttons ---------------------------------------
     if st.button("Send to WordPress"):
