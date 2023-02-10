@@ -72,39 +72,4 @@ if st.button("Submit") and text:
     result = st.write(generated)
     st.text("")
     
-    ## Buttons ---------------------------------------
-    if st.button("Send to WordPress"):
-
-        # --------- variable -----------
-        url = 'https://www.midasdigitaltimes.com/'  # home page link
-        # wpMail = 'temp@gmail.com'  # mail ID
-        wpMail = 'midasbiz101@gmail.com'
-        wpPW = 'e4Ky 3ok7 8DEN dMzU tUmV nDxJ' # account API token
-        status = 'draft' # choose one publish or draft
-        slug = 'python-auto-post-rest-api'
-
-        title = default_text
-        content = result
-        category = [1]
-        tag = [1]
-
-        payload = {"status": status,
-                    "slug": slug,
-                    "title": title,
-                    "content": content,
-                    "date": datetime.now().isoformat(),
-                    "categories": category,
-                    "tags": tag}
-
-        # ---------- function -----------
-        res = requests.post(urljoin(url, "wp-json/wp/v2/posts"),
-                            data=json.dumps(payload),
-                            headers={'Content-type': "application/json"},
-                            auth=(wpMail, wpPW))
-        
-        # ---------- status -------------
-        if res.ok:
-            st.success("Successful.")
-        else:
-            st.error("Somthing's wrong.", f"fail code:{res.status_code} reason:{res.reason} msg:{res.text}")
-
+    
