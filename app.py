@@ -30,11 +30,12 @@ st.image("https://em-content.zobj.net/source/skype/289/robot_1f916.png", width=1
 
 ## Title -----------------------------------------
 st.title("AI Paragraph Generator")
-st.text("")
 
 ## Header/Subheader ------------------------------
 st.subheader("Generate a paragraph with just one sentence.")
 st.text("")
+st.text("")
+
 
 ## Text input
 default_text = "인공지능을 잘 사용하려면"
