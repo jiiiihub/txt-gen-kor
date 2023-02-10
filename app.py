@@ -36,7 +36,7 @@ st.subheader("Generate a paragraph with just one sentence.")
 
 
 ## Text input
-default_text = "인공지능을 잘 사용하기 위해서는"
+default_text = "인공지능을 잘 사용하려면"
 
 N_SENT = 3
 
