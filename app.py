@@ -52,7 +52,7 @@ punct = ('!', '?', '.')
 
 ## Buttons ---------------------------------------
 if st.button("Submit") and text:
-    st.markdown("## 생성결과")
+    st.markdown("## Generated Text")
     with st.spinner('processing..'):
         print(f'input > {text}') 
         input_ids = tokenizer(text)['input_ids']
@@ -66,8 +66,8 @@ if st.button("Submit") and text:
                     break
             generated = generated[:(i+1)]
         print(f'KoGPT > {generated}')
-    st.write(generated)
-
+    result = st.write(generated)
+    
     ## Buttons ---------------------------------------
     if st.button("Send to WordPress"):
 
@@ -79,8 +79,8 @@ if st.button("Submit") and text:
         status = 'draft' # choose one publish or draft
         slug = 'python-auto-post-rest-api'
 
-        title = starting_sentence
-        content = txt
+        title = default_text
+        content = result
         category = [1]
         tag = [1]
 
@@ -103,3 +103,4 @@ if st.button("Submit") and text:
             st.success("Successful.")
         else:
             st.error("Somthing's wrong.", f"fail code:{res.status_code} reason:{res.reason} msg:{res.text}")
+
