@@ -20,7 +20,7 @@ tokenizer = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",
 
 
 ## Page title and favicon ------------------------
-st.set_page_config(page_title = "AI단락생성기",
+st.set_page_config(page_title = "AI 단락 생성기",
                    page_icon = "https://em-content.zobj.net/source/skype/289/robot_1f916.png")
 
 ## Page content logo and header ------------------
@@ -30,10 +30,11 @@ st.image("https://em-content.zobj.net/source/skype/289/robot_1f916.png", width=1
 
 ## Title -----------------------------------------
 st.title("AI Paragraph Generator")
+st.text("")
 
 ## Header/Subheader ------------------------------
 st.subheader("Generate a paragraph with just one sentence.")
-
+st.text("")
 
 ## Text input
 default_text = "인공지능을 잘 사용하려면"
@@ -44,13 +45,13 @@ model = get_model()
 #st.title("Text-generator")
 
 text = st.text_input("시작할 문장이나 문구를 입력하세요👇", value=default_text)
-st.write(text)
+# st.write(text)
 punct = ('!', '?', '.')
 
 
 ## Buttons ---------------------------------------
 if st.button("Submit") and text:
-    st.markdown("## Predict")
+    st.markdown("## 생성결과")
     with st.spinner('processing..'):
         print(f'input > {text}') 
         input_ids = tokenizer(text)['input_ids']
@@ -66,3 +67,38 @@ if st.button("Submit") and text:
         print(f'KoGPT > {generated}')
     st.write(generated)
 
+    ## Buttons ---------------------------------------
+    if st.button("Send to WordPress"):
+
+        # --------- variable -----------
+        url = 'https://www.midasdigitaltimes.com/'  # home page link
+        # wpMail = 'temp@gmail.com'  # mail ID
+        wpMail = 'midasbiz101@gmail.com'
+        wpPW = 'e4Ky 3ok7 8DEN dMzU tUmV nDxJ' # account API token
+        status = 'draft' # choose one publish or draft
+        slug = 'python-auto-post-rest-api'
+
+        title = starting_sentence
+        content = txt
+        category = [1]
+        tag = [1]
+
+        payload = {"status": status,
+                    "slug": slug,
+                    "title": title,
+                    "content": content,
+                    "date": datetime.now().isoformat(),
+                    "categories": category,
+                    "tags": tag}
+
+        # ---------- function -----------
+        res = requests.post(urljoin(url, "wp-json/wp/v2/posts"),
+                            data=json.dumps(payload),
+                            headers={'Content-type': "application/json"},
+                            auth=(wpMail, wpPW))
+        
+        # ---------- status -------------
+        if res.ok:
+            st.success("Successful.")
+        else:
+            st.error("Somthing's wrong.", f"fail code:{res.status_code} reason:{res.reason} msg:{res.text}")
